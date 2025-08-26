@@ -18,7 +18,7 @@ struct datos_libros {
 
 /* DECLARACIÓN DE FUNCIONES */
 void menu(int *opcion);
-void cargardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
+void cargar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 void mostrardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 void guardararchivo(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad);
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 		menu(&opcion);
 		switch(opcion) {
 		case 1:
-			cargardatos(libros, &cantidad);
+			cargar_datos(libros, &cantidad);
 			break;
 		case 2:
 			mostrardatos(libros, &cantidad);
@@ -68,27 +68,29 @@ void menu(int *opcion) {
 	getchar();/* Limpiar el buffer del teclado */
 }
 
-void cargardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
-	int salir = 0, i=0;
-	while (!salir) {
-		printf("\nIngrese titulo libro: ");
-		gets(libros[i].titulo);
-		printf("\nIngrese autor libro: ");
-		gets(libros[i].autor);
-		printf("\nIngrese anio edicion: ");
-		scanf("%d",&libros[i].anio);
+void cargar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
+	int continuar = 1;
+	
+	while (continuar) {
+		printf("\nIngrese título del libro: ");
+		fgets(libros[*cantidad].titulo, sizeof(libros[*cantidad].titulo), stdin);
+		libros[*cantidad].titulo[strcspn(libros[*cantidad].titulo, "\n")] = 0;
+		
+		printf("Ingrese autor del libro: ");
+		fgets(libros[*cantidad].autor, sizeof(libros[*cantidad].autor), stdin);
+		libros[*cantidad].autor[strcspn(libros[*cantidad].autor, "\n")] = 0;
+		
+		printf("Ingrese año de edición: ");
+		scanf("%d", &libros[*cantidad].anio);
 		getchar();
-		i++;
-		(*cantidad=i);
+		
+		(*cantidad)++;  /* Incrementar contador de libros */
 		
 		printf("\n[1] MENU | [2] AGREGAR OTRO LIBRO: ");
-		scanf("%d", &salir);
+		scanf("%d", &continuar);
 		getchar();
-		if (salir == 1) {
-			salir = 1;
-		} else {
-			salir = 0;
-		}
+		
+		continuar = (continuar == 2);  /* Si elige 2, sigue cargando */
 	}
 }
 
