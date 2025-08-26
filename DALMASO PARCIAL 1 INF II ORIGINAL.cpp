@@ -55,7 +55,11 @@ int main(int argc, char *argv[]) {
 	} while(opcion != 6);
 	return 0;
 }
-
+/* 
+Función que muestra el menú principal y recibe la opción elegida por el usuario.
+Entrada: puntero a opción
+Salida: actualiza el valor de opción
+*/
 void menu(int *opcion) {
 	printf("\n1. Cargar Libros\n");
 	printf("2. Listar Libros en pantalla\n");
@@ -67,7 +71,11 @@ void menu(int *opcion) {
 	scanf("%d", opcion);
 	getchar();/* Limpiar el buffer del teclado */
 }
-
+/* 
+Función que permite al usuario cargar uno o más libros desde teclado.
+Entrada: arreglo de libros, puntero a cantidad de libros
+Salida: actualiza el arreglo con los libros ingresados
+*/
 void cargar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	int continuar = 1;
 	
@@ -93,7 +101,11 @@ void cargar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 		continuar = (continuar == 2);  /* Si elige 2, sigue cargando */
 	}
 }
-
+/* 
+Función que muestra todos los libros cargados hasta el momento.
+Entrada: arreglo de libros, puntero a cantidad de libros
+Salida: impresión en pantalla
+*/
 void mostrar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	printf("\n======= LISTA DE LIBROS =======\n");
 	
@@ -104,7 +116,11 @@ void mostrar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 		printf("Año de edición: %d\n", libros[i].anio);
 	}
 }
-
+/* 
+Función que permite buscar libros por título, autor o año.
+Entrada: arreglo de libros, puntero a cantidad de libros
+Salida: muestra en pantalla los libros coincidentes
+*/
 void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	int opcion = 0;
 	
@@ -185,6 +201,11 @@ void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 		
 	} while(opcion != 4);
 }
+/* 
+Función que guarda todos los libros en un archivo de texto llamado "Datoslibros.txt".
+Entrada: arreglo de libros, puntero a cantidad de libros
+Salida: archivo con la información
+*/
 void guardar_archivo(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	FILE *archivo = fopen("Datoslibros.txt", "w");
 	
