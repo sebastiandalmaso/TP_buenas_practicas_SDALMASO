@@ -19,8 +19,8 @@ struct datos_libros {
 /* DECLARACIÓN DE FUNCIONES */
 void menu(int *opcion);
 void cargar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
-void mostrardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
-void guardararchivo(struct datos_libros libros[MAX_LIBROS], int *cantidad);
+void mostrar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
+void guardar_archivo(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 
 struct datos_libros libros[MAX_LIBROS];
@@ -36,13 +36,13 @@ int main(int argc, char *argv[]) {
 			cargar_datos(libros, &cantidad);
 			break;
 		case 2:
-			mostrardatos(libros, &cantidad);
+			mostrar_datos(libros, &cantidad);
 			break;
 		case 3:
 			buscarlibro(libros, &cantidad);
 			break;
 		case 4:
-			guardararchivo(libros, &cantidad);
+			guardar_archivo(libros, &cantidad);
 			break;
 		case 5:
 			/* buscarLibroArchivo(libros);  Función no implementada en el examen */
@@ -94,17 +94,17 @@ void cargar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	}
 }
 
-void mostrardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
+void mostrar_datos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	printf("\n======= LISTA DE LIBROS =======\n");
-	for (int i=0; i<*cantidad; i++) {
+	
+	for (int i = 0; i < *cantidad; i++) {
 		printf("\nLibro %d:\n", i + 1);
-		printf("Titulo:");
-		puts(libros[i].titulo);
-		printf("Autor:");
-		puts(libros[i].autor);
-		printf("Anio de edicion: %d\n", libros[i].anio);
+		printf("Título: %s\n", libros[i].titulo);
+		printf("Autor: %s\n", libros[i].autor);
+		printf("Año de edición: %d\n", libros[i].anio);
 	}
 }
+
 void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	int opcion = 0;
 	
@@ -185,14 +185,21 @@ void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 		
 	} while(opcion != 4);
 }
-void guardararchivo(struct datos_libros libros[MAX_LIBROS],int *cantidad){
-	int i;
-	FILE *puntero_archivos;
-	puntero_archivos = fopen("Datoslibros.txt","w");
-		for(i=0;i<*cantidad;i++){
-			fprintf(puntero_archivos,"%s\n", libros[i].titulo);
-			fprintf(puntero_archivos,"%s\n", libros[i].autor);
-			fprintf(puntero_archivos,"%d\n",libros[i].anio);
-		}
-	fclose(puntero_archivos);
+void guardar_archivo(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
+	FILE *archivo = fopen("Datoslibros.txt", "w");
+	
+	/* Verifica si el archivo se abrió correctamente */
+	if (!archivo) {
+		printf("Error al abrir el archivo para escritura.\n");
+		return;
+	}
+	
+	for (int i = 0; i < *cantidad; i++) {
+		fprintf(archivo, "%s\n", libros[i].titulo);
+		fprintf(archivo, "%s\n", libros[i].autor);
+		fprintf(archivo, "%d\n", libros[i].anio);
+	}
+	
+	fclose(archivo);
+	printf("Archivo guardado exitosamente.\n");
 }
