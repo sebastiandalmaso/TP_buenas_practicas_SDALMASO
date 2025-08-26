@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define MAX_LIBROS 10000
+
 struct datos_libros {
 	char titulo[100];
 	char autor[50];
@@ -8,12 +10,12 @@ struct datos_libros {
 };
 
 void menu(int *opcion);
-void cargardatos(struct datos_libros libros[10000], int *cantidad);
-void mostrardatos(struct datos_libros libros[10000], int *cantidad);
-void guardararchivo(struct datos_libros libros[10000], int *cantidad);
-void buscarlibro(struct datos_libros libros[10000], int *cantidad);
+void cargardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
+void mostrardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
+void guardararchivo(struct datos_libros libros[MAX_LIBROS], int *cantidad);
+void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 
-struct datos_libros libros[10000];
+struct datos_libros libros[MAX_LIBROS];
 
 int main(int argc, char *argv[]) {
 	int opcion = 0, cantidad = 0;
@@ -56,7 +58,7 @@ void menu(int *opcion) {
 	getchar();
 }
 
-void cargardatos(struct datos_libros libros[10000], int *cantidad) {
+void cargardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	int salir = 0, i=0;
 	while (!salir) {
 		printf("\nIngrese titulo libro: ");
@@ -80,7 +82,7 @@ void cargardatos(struct datos_libros libros[10000], int *cantidad) {
 	}
 }
 
-void mostrardatos(struct datos_libros libros[10000], int *cantidad) {
+void mostrardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	printf("\n======= LISTA DE LIBROS =======\n");
 	for (int i=0; i<*cantidad; i++) {
 		printf("\nLibro %d:\n", i + 1);
@@ -91,7 +93,7 @@ void mostrardatos(struct datos_libros libros[10000], int *cantidad) {
 		printf("Anio de edicion: %d\n", libros[i].anio);
 	}
 }
-void buscarlibro(struct datos_libros libros[10000], int *cantidad) {
+void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
 	int opcion = 0;
 	
 	do {
@@ -171,7 +173,7 @@ void buscarlibro(struct datos_libros libros[10000], int *cantidad) {
 		
 	} while(opcion != 4);
 }
-void guardararchivo(struct datos_libros libros[10000],int *cantidad){
+void guardararchivo(struct datos_libros libros[MAX_LIBROS],int *cantidad){
 	int i;
 	FILE *puntero_archivos;
 	puntero_archivos = fopen("Datoslibros.txt","w");
