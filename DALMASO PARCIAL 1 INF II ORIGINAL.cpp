@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_LIBROS 10000
+#define MAX_LIBROS 10000 /* Definición de constante para la cantidad máxima de libros */
+
+/* 
+Estructura que almacena los datos de un libro:
+- titulo: título del libro
+- autor: nombre del autor
+- anio: año de edición 
+*/
 
 struct datos_libros {
 	char titulo[100];
@@ -9,6 +16,7 @@ struct datos_libros {
 	int anio;
 };
 
+/* DECLARACIÓN DE FUNCIONES */
 void menu(int *opcion);
 void cargardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 void mostrardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad);
@@ -16,7 +24,9 @@ void guardararchivo(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 void buscarlibro(struct datos_libros libros[MAX_LIBROS], int *cantidad);
 
 struct datos_libros libros[MAX_LIBROS];
-
+/*
+MAIN del programa. Muestra el menú y ejecuta las opciones según lo que elija el usuario.
+*/
 int main(int argc, char *argv[]) {
 	int opcion = 0, cantidad = 0;
 	do {
@@ -35,7 +45,7 @@ int main(int argc, char *argv[]) {
 			guardararchivo(libros, &cantidad);
 			break;
 		case 5:
-			// buscarLibroArchivo(libros);
+			/* buscarLibroArchivo(libros);  Función no implementada en el examen */
 			break;
 		case 6:
 			break;
@@ -55,7 +65,7 @@ void menu(int *opcion) {
 	printf("6. Salir\n");
 	printf("Elija opcion: ");
 	scanf("%d", opcion);
-	getchar();
+	getchar();/* Limpiar el buffer del teclado */
 }
 
 void cargardatos(struct datos_libros libros[MAX_LIBROS], int *cantidad) {
